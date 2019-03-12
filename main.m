@@ -11,8 +11,8 @@ clear all
 clc
 
 % Format of output
-% format short
-% format long
+    % format short
+    format long
 
 %% orbital constants
 orbital_constants

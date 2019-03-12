@@ -93,9 +93,4 @@ mu1 = cst.mu1;
 
 
 
-
-%% Some dummy values; delete these once you start writing your own code.
-%rg1 = [Re + 450*1000; Re + 550*1000; Re + 650*1000];
-%vg1 = [-2000; 1000; 4000];
-
 end

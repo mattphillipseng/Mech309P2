@@ -12,8 +12,8 @@ p = rp*(1 + e); % m, semilatus rectum
 h = sqrt(p*mu1);
 
 %% Find the DCM from the perifocal frame to the inertial frame
-Cpg = eye(3); % Made up, needs to be changed. 
-Cgp = Cpg'; % all angels in radians (rad)
+Cpg = C3(omega_orbit)*C1(inc)*C3(Omega);
+Cgp = Cpg'; % all angles in radians (rad)
 
 % Compute th, r, R, and V
 [th,r,R_g,V_g] = solve_two_body_prob(t,a,e,p,t0,Cgp);
