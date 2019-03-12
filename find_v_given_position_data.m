@@ -9,7 +9,7 @@ mu1 = cst.mu1;
 
 % Here is where you will write code to find vg1 given rg1, rg2, t1, and t2.
 
-%% From Mini Project 1
+%% From Mini Project 1 %%
 
     T_triangle = 0.5*norm( cross(rg1)*rg2 ); %triangle area between rg1, rg2, center of earth
     delta_theta = asin( T_triangle /(0.5*norm(rg1)*norm(rg2)) ); %from same formula as above
