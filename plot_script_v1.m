@@ -6,7 +6,7 @@ line_width = 2;
 Re = cst.Re;
 
 figure
-plot3(SC_r_g_initial_hat(:,1),SC_r_g_initial_hat(:,2),SC_r_g_initial_hat(:,3),'rx','Linewidth',line_width);
+plot3(SC_r_g_initial_hat(:,1),SC_r_g_initial_hat(:,2),SC_r_g_initial_hat(:,3),'ro','Linewidth',line_width);
 hold on
 plot3(SC_r_g_hat(:,1),SC_r_g_hat(:,2),SC_r_g_hat(:,3),'mx','Linewidth',line_width);
 hold on

@@ -53,8 +53,8 @@ while (lv0 <= 100)&&(lv1 <= length(t)) % length(t)
     N_meas = meas_data_size(1,1);
     
     % Made up, need to change
-    SC_r_g_initial_hat(lv1,:) = R_orbit; % Initial estimate of the receiver position
-    SC_r_g_hat(lv1,:) = R_orbit*1.5; % Estimate of the receiver position
+    SC_r_g_initial_hat(lv1,:) = R_orbit; % Initial estimate of the receiver position, from orbit propagation
+    SC_r_g_hat(lv1,:) = R_orbit*1.5; % Estimate of the receiver position, from GPS data
     bias_hat(lv1) = 10;
     b_error(lv1) = 1;
     
