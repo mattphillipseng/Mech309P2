@@ -89,7 +89,7 @@ mu1 = cst.mu1;
     G = G_num/G_denom;
 
     %% Final Results
-    vg1 = (rg2-(F*rg1))/G
+    vg1 = (rg2-(F*rg1))/G;
 
 
 

@@ -40,9 +40,8 @@ t0 = Delta_t0 - t1;
 T = 2*pi*sqrt(a^3/cst.mu1);
 
 %% Solve for position given GPS measurments
-lv0 = 1; % extra counter.
 lv1 = 1;
-while (lv0 <= 100)&&(lv1 <= length(t)) % length(t)
+while(lv1 <= length(t)) % length(t)
     
     % Initial guess from orbit propagation
     [R_orbit,V_orbit] = orbit_propagation(a,e,Omega,inc,omega_orbit,t0,t(lv1));
@@ -52,15 +51,32 @@ while (lv0 <= 100)&&(lv1 <= length(t)) % length(t)
     meas_data_size = size(meas_data);
     N_meas = meas_data_size(1,1);
     
+    % Get positions of the 6 GPS satellites at this time step
+    sat_num = 1;
+    while (sat_num <= N_meas)
+        a_sat = meas_data(sat_num,3); % a
+        e_sat = meas_data(sat_num,4); % e
+        Omega_sat = meas_data(sat_num,5); % Omega
+        inc_sat = meas_data(sat_num,6); % inc
+        omega_orbit_sat = meas_data(sat_num,7); % omega_orbit
+        t0_sat =  meas_data(sat_num,8); % t0
+        
+    GPS_sat_positions(sat_num,:) = orbit_propagation(a_sat,e_sat,Omega_sat,inc_sat,omega_orbit_sat,t0_sat,t(lv1));
+    
+    sat_num = sat_num + 1;
+    end
+    
     % Made up, need to change
     SC_r_g_initial_hat(lv1,:) = R_orbit; % Initial estimate of the receiver position, from orbit propagation
-    SC_r_g_hat(lv1,:) = R_orbit*1.5; % Estimate of the receiver position, from GPS data
+    initial_guess = R_orbit;
+    
+    % Estimate of the receiver position, from GPS data
+    SC_r_g_hat(lv1,:) = solve_pos_from_GPS(GPS_sat_positions,R_orbit);
     bias_hat(lv1) = 10;
     b_error(lv1) = 1;
     
     % Update counters
-    lv1 = lv1 + 1; 
-    lv0 = lv0 + 1;
+    lv1 = lv1 + 1;
 end
 
 plot_script_v1;
