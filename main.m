@@ -55,7 +55,7 @@ while(lv1 <= length(t)) % length(t)
     SC_r_g_initial_hat(lv1,:) = R_orbit; % Initial estimate of the receiver position, from orbit propagation
     
     % Estimate of the receiver position, from GPS data
-    SC_r_g_hat(lv1,:) = solve_pos_from_GPS(meas_data,R_orbit);
+    SC_r_g_hat(lv1,:) = solve_pos_from_GPS(meas_data,R_orbit,t(lv1));
     bias_hat(lv1) = 10;
     b_error(lv1) = 1;
     
