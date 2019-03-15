@@ -48,14 +48,33 @@ while(lv1 <= length(t)) % length(t)
     
     % Extract measurment data
     meas_data = measurements(:,:,lv1);
-    %meas_data_size = size(meas_data);
-    %N_meas = meas_data_size(1,1);
+    meas_data_size = size(meas_data);
+    N_meas = meas_data_size(1,1);
     
-    % This matrix used for plotting
+    % Get positions of the 6 GPS satellites at this time step
+    sat_num = 1;
+    while (sat_num <= N_meas)
+        a_sat = meas_data(sat_num,3); % a
+        e_sat = meas_data(sat_num,4); % e
+        Omega_sat = meas_data(sat_num,5); % Omega
+        inc_sat = meas_data(sat_num,6); % inc
+        omega_orbit_sat = meas_data(sat_num,7); % omega_orbit
+        t0_sat =  meas_data(sat_num,8); % t0
+        
+    GPS_sat_positions(sat_num,:) = orbit_propagation(a_sat,e_sat,Omega_sat,inc_sat,omega_orbit_sat,t0_sat,t(lv1));
+    
+    sat_num = sat_num + 1;
+    end
+    
+    % Made up, need to change
     SC_r_g_initial_hat(lv1,:) = R_orbit; % Initial estimate of the receiver position, from orbit propagation
+    init_guess_pos = R_orbit;
+    init_guess_rec_bias = 0;
+    
+    init
     
     % Estimate of the receiver position, from GPS data
-    SC_r_g_hat(lv1,:) = solve_pos_from_GPS(meas_data,R_orbit);
+    SC_r_g_hat(lv1,:) = solve_pos_from_GPS(GPS_sat_positions,init_guess_pos,init_guess_rec_bias);
     bias_hat(lv1) = 10;
     b_error(lv1) = 1;
     

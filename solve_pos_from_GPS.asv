@@ -1,8 +1,9 @@
 % This code solves for position given the GPS Satellite data, and an
-% initial guess for the receiver's position
+% initial guess, which includes a guess for position, and the receiver bias
 
 function  [soln_matrix] = solve_pos_from_GPS(meas_data,init_guess_pos);
-%% GPS Satellite Data Separation 
+
+%% Data Separation 
 sat_data_size = size(sat_data);
 N_meas = sat_data_size(1,1);
 
@@ -22,17 +23,21 @@ while (sat_num <= N_meas)
     pseudoranges(sat_num,:) = meas_data(sat_num,1);
     
     % Standard Deviation Data
-    S_devs(sat_num,:) = meas_data(sat_num,2);
-    
-    % Bias Data
-    GPS_bias(sat_num,:) = meas_data(sat_num,9);
+    S_devs(sat_num,:) = meas_data(sat_nu
     
 
     sat_num = sat_num + 1;
 end
 
 
-%% Getting ready for non-linear least squares
+
+
+
+
+
+
+
+
 A_matrix = A_matrix_gen(GPS_sat_positions, init_guess_pos);
 
 init_receiver_bias = 0; % set to 0, or whatever you want the initial guess to be
