@@ -19,7 +19,7 @@ while (lv_row <= sat_num)
     while(lv_col <= 3) % only go to 3rd col, last col should be 1's, and was already allocated
         numerator = receiver_pos(lv_col) - GPS_sat_positions(lv_row,lv_col);
        
-        A_matrix(lv_row,lv_col) = -(numerator/dist); % Writes to A matrix
+        A_matrix(lv_row,lv_col) = (numerator/dist); % Writes to A matrix
        
         lv_col = lv_col+1;
    end
