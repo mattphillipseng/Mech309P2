@@ -31,7 +31,6 @@ while (sat_num <= N_meas)
 
     sat_num = sat_num + 1;
 end
-GPS_sat_positions
 
 %% Getting ready for non-linear least squares
 init_receiver_bias = 0; % set to 0, or whatever you want the initial guess to be
@@ -43,8 +42,8 @@ soln_matrix = [init_guess_pos;init_receiver_bias];
 iters = 1;
 err = 100; % just to enter the while loop
 
-% Will stop when norm of error is within 1m, or at 100 iterations
-while (err>1) && (iters<=30)
+% Will stop when norm of error is within 0.1m, or at 100 iterations
+while (err>0.1) && (iters<=50)
     soln_pos = soln_matrix(1:3); % Only positions of the receiver, excludes the receiver bias. 
     
     A_matrix = A_matrix_gen(GPS_sat_positions, soln_pos);
@@ -58,3 +57,4 @@ while (err>1) && (iters<=30)
     
     iters = iters +1;
 end
+soln_matrix
