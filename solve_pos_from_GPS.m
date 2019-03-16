@@ -57,4 +57,4 @@ while (err>0.1) && (iters<=50)
     
     iters = iters +1;
 end
-soln_matrix
+soln_matrix;

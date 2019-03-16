@@ -64,18 +64,18 @@ while(lv1 <= length(t)) % length(t)
     b_error(lv1) = 1;
     
     % Update counters
-    lv1 = lv1 + 1
+    lv1 = lv1 + 1;
 end
 
 %% Find orbital elements from GPS position data
-    R1 = [SC_r_g_hat(1,1);SC_r_g_hat(1,2);SC_r_g_hat(1,3)]
-    R2 = [SC_r_g_hat(2,1);SC_r_g_hat(2,2);SC_r_g_hat(2,3)]
-    
-    [R1,V1] = find_v_given_position_data(R1,R2,t(1),t(2));
-    [a_gps,e_gps,Omega_gps,inc_gps,omega_orbit_gps,Delta_t0_gps] = orbital_elements(rg1,vg1);
-    t0_gps = t(1) - Delta_t0_gps;
-    
-    real_orbs = [a_gps,e_gps,Omega_gps,inc_gps,omega_orbit_gps,t0_gps];
+R1 = [SC_r_g_hat(1,1);SC_r_g_hat(1,2);SC_r_g_hat(1,3)];
+R2 = [SC_r_g_hat(2,1);SC_r_g_hat(2,2);SC_r_g_hat(2,3)];
 
+[R1,V1] = find_v_given_position_data(R1,R2,t(1),t(2));
+[a_gps,e_gps,Omega_gps,inc_gps,omega_orbit_gps,Delta_t0_gps] = orbital_elements(rg1,vg1);
+t0_gps = t(1) - Delta_t0_gps;
 
+real_orbs = [a_gps,e_gps,Omega_gps,inc_gps,omega_orbit_gps,t0_gps]
+
+%% Plot results
 plot_script_v1;
