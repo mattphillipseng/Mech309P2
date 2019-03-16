@@ -15,8 +15,9 @@ while (sat_num <= N_meas)
     inc_sat = meas_data(sat_num,6); % inc
     omega_orbit_sat = meas_data(sat_num,7); % omega_orbit
     t0_sat =  meas_data(sat_num,8); % t0
-
-    GPS_sat_positions(sat_num,:) = orbit_propagation(a_sat,e_sat,Omega_sat,inc_sat,omega_orbit_sat,t0_sat,current_time);
+    
+    [sat_R,sat_V] = orbit_propagation(a_sat,e_sat,Omega_sat,inc_sat,omega_orbit_sat,t0_sat,current_time);
+    GPS_sat_positions(sat_num,:) = sat_R';
     
     % Pseudorange Data
     pseudoranges(sat_num,:) = meas_data(sat_num,1);
@@ -30,7 +31,7 @@ while (sat_num <= N_meas)
 
     sat_num = sat_num + 1;
 end
-
+GPS_sat_positions
 
 %% Getting ready for non-linear least squares
 init_receiver_bias = 0; % set to 0, or whatever you want the initial guess to be
@@ -39,34 +40,21 @@ init_receiver_bias = 0; % set to 0, or whatever you want the initial guess to be
 soln_matrix = [init_guess_pos;init_receiver_bias];
 
 %% Non-Lin Least Squares Iteration
-iters = 0;
+iters = 1;
 err = 100; % just to enter the while loop
 
 % Will stop when norm of error is within 1m, or at 100 iterations
-while (err>1) && (iters<=100)
-    A_matrix = A_matrix_gen(GPS_sat_positions, soln_matrix);
-    b_matrix = b_matrix_gen(GPS_sat_positions, soln_matrix, pseudoranges, GPS_biases);
+while (err>1) && (iters<=30)
+    soln_pos = soln_matrix(1:3); % Only positions of the receiver, excludes the receiver bias. 
     
-    delta = inv(A_matrix' * A_matrix) * A_matrix' * b_matrix;
+    A_matrix = A_matrix_gen(GPS_sat_positions, soln_pos);
+    b_matrix = b_matrix_gen(GPS_sat_positions, soln_pos, pseudoranges, GPS_biases); % is actually b-f(X)
+    
+    delta = inv(A_matrix'*A_matrix)*A_matrix'*b_matrix;
     soln_matrix = soln_matrix + delta;
-        
-    error_matrix = b_matrix - (A_matrix*soln_matrix);
+
+    error_matrix = b_matrix - (A_matrix*delta);
     err = norm(error_matrix);
     
     iters = iters +1;
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-soln_matrix = init_guess_pos*1.5; %for now, delete later

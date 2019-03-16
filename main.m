@@ -47,7 +47,8 @@ while(lv1 <= length(t)) % length(t)
     [R_orbit,V_orbit] = orbit_propagation(a,e,Omega,inc,omega_orbit,t0,t(lv1));
     
     % Extract measurment data
-    meas_data = measurements(:,:,lv1);
+    meas_data = measurements(:,:,lv1); % only take measurements for this time step
+    
     %meas_data_size = size(meas_data);
     %N_meas = meas_data_size(1,1);
     
@@ -55,7 +56,8 @@ while(lv1 <= length(t)) % length(t)
     SC_r_g_initial_hat(lv1,:) = R_orbit; % Initial estimate of the receiver position, from orbit propagation
     
     % Estimate of the receiver position, from GPS data
-    SC_r_g_hat(lv1,:) = solve_pos_from_GPS(meas_data,R_orbit,t(lv1));
+    solution = solve_pos_from_GPS(meas_data,R_orbit,t(lv1));
+    SC_r_g_hat(lv1,:) = solution(1:3); %just the X,Y,Z positions
     bias_hat(lv1) = 10;
     b_error(lv1) = 1;
     

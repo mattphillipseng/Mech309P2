@@ -33,33 +33,30 @@ end
 
 
 %% Getting ready for non-linear least squares
-init_receiver_bias = 0; % set to 0, or whatever you want the initial guess to be
+init_receiver_bias = 1; % set to 0, or whatever you want the initial guess to be
 
 % append the receiver bias initial guess to the position initial guess
 soln_matrix = [init_guess_pos;init_receiver_bias];
 
 %% Non-Lin Least Squares Iteration
-iters = 0;
+iters = 1;
 err = 100; % just to enter the while loop
 
 % Will stop when norm of error is within 1m, or at 100 iterations
 while (err>1) && (iters<=100)
-    A_matrix = A_matrix_gen(GPS_sat_positions, soln_matrix);
-    b_matrix = b_matrix_gen(GPS_sat_positions, soln_matrix, pseudoranges, GPS_biases);
+    soln_pos = soln_matrix(1:3); % Only positions of the receiver, excludes the receiver bias. 
     
+    A_matrix = A_matrix_gen(GPS_sat_positions, soln_pos);
+    b_matrix = b_matrix_gen(GPS_sat_positions, soln_pos, pseudoranges, GPS_biases); % is actually b-f(X)    
     
-    delta = inv(A_matrix*A_matrix')
-    soln_matrix = soln_matrix + 
-    
-    
-    error_matrix = b_matrix - (A_matrix*soln_matrix);
+    delta = inv(A_matrix' * A_matrix) * A_matrix' * b_matrix;
+    soln_matrix = soln_matrix + delta
+
+    error_matrix = b_matrix - (A_matrix*soln_matrix)
     err = norm(error_matrix);
-
     
-    iters = iters +1;
+    iters = iters +1
 end
-
-
 
 
 
