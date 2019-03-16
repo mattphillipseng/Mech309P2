@@ -69,6 +69,4 @@ end
 
 
 
-
-
 soln_matrix = init_guess_pos*1.5; %for now, delete later
