@@ -52,7 +52,7 @@ while (err>0.1) && (iters<=50)
     delta = inv(A_matrix'*A_matrix)*A_matrix'*b_matrix;
     soln_matrix = soln_matrix + delta;
 
-    error_matrix = b_matrix - (A_matrix*delta);
+    error_matrix = b_matrix - (A_matrix*delta); %%%%%%% CHECK THIS WITH NOTES
     err = norm(error_matrix);
     
     iters = iters +1;
