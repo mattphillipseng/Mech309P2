@@ -18,11 +18,10 @@ while (lv1 <= num_sats)
     Z_diff = GPS_sat_positions(lv1,3) - soln_matrix(3);
     
     dist = sqrt((X_diff)^2 + (Y_diff)^2 + (Z_diff)^2);
-    GPS_pseudo = pseudoranges(lv1); % pseudorange from gps satellite
-    GPS_bias = GPS_biases(lv1); 
-    receiver_bias = soln_matrix(4);
+    pseudo = pseudoranges(lv1); % pseudorange from gps satellite
+    GPS_bias = GPS_biases(lv1); % 
     
-    b_matrix(lv1,1) = GPS_pseudo + GPS_bias - dist - receiver_bias;
+    b_matrix(lv1,1) = pseudo - dist + GPS_bias;
     
     lv1 = lv1 +1;
            
