@@ -47,7 +47,7 @@ while (err>0.1) && (iters<=50)
     soln_pos = soln_matrix(1:3); % Only positions of the receiver, excludes the receiver bias. 
     
     A_matrix = A_matrix_gen(GPS_sat_positions, soln_pos);
-    b_matrix = b_matrix_gen(GPS_sat_positions, soln_pos, pseudoranges, GPS_biases); % is actually b-f(X)
+    b_matrix = b_matrix_gen(GPS_sat_positions, soln_matrix, pseudoranges, GPS_biases); % is actually b-f(X)
     
     delta = inv(A_matrix'*A_matrix)*A_matrix'*b_matrix;
     soln_matrix = soln_matrix + delta;
