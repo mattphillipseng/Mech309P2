@@ -38,6 +38,9 @@ init_receiver_bias = 0; % set to 0, or whatever you want the initial guess to be
 % append the receiver bias initial guess to the position initial guess
 soln_matrix = [init_guess_pos;init_receiver_bias];
 
+%Generate weight matrix for sat data at each time step
+Weight_matrix = Weight_matrix_gen(S_devs);
+
 %% Non-Lin Least Squares Iteration
 iters = 1;
 err = 100; % just to enter the while loop
@@ -47,9 +50,9 @@ while (err>0.01) && (iters<=50)
     soln_pos = soln_matrix(1:3); % Only positions of the receiver, excludes the receiver bias. 
     
     A_matrix = A_matrix_gen(GPS_sat_positions, soln_pos);
-    b_matrix = b_matrix_gen(GPS_sat_positions, soln_matrix, pseudoranges, GPS_biases); % is actually b-f(X)
+    b_matrix = b_matrix_gen(GPS_sat_positions, soln_matrix, pseudoranges, GPS_biases); % is actually b-f(X)    
     
-    delta = inv(A_matrix'*A_matrix)*A_matrix'*b_matrix;
+    delta = inv(A_matrix'*A_matrix)*A_matrix'*Weight_matrix*b_matrix;
     soln_matrix = soln_matrix + delta;
 
     %error_matrix = b_matrix - (A_matrix*delta); %%%%%%% CHECK THIS WITH NOTES

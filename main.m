@@ -75,7 +75,7 @@ R2_gps = [SC_r_g_hat(2,1) ; SC_r_g_hat(2,2) ; SC_r_g_hat(2,3)];
 
 [R1_gps,V1_gps] = find_v_given_position_data(R1_gps,R2_gps,t(1),t(2));
 [a_gps,e_gps,Omega_gps,inc_gps,omega_orbit_gps,Delta_t0_gps] = orbital_elements(R1_gps,V1_gps);
-t0_gps = t(1) - Delta_t0_gps;
+t0_gps = Delta_t0_gps - t(1);
 
 orbs_gps = [a_gps,e_gps,Omega_gps,inc_gps,omega_orbit_gps,t0_gps]
 
