@@ -31,12 +31,12 @@ whos
 % Note, this function ``orbital_elements" is NOT the same as in MP1; this
 % one outputs Delta_t, and not t0.
 [a,e,Omega,inc,omega_orbit,Delta_t0] = orbital_elements(rg1,vg1);
-t0 = t(1) - Delta_t0;
-orbs_theoretical = [a,e,Omega,inc,omega_orbit,t0]
 
 % To find t0, need to subtract the time the first radar meas was taken from
 % Delta_t0
 t0 = Delta_t0 - t1;
+
+orbs_theoretical = [a,e,Omega,inc,omega_orbit,t0]
 
 % Period
 T = 2*pi*sqrt(a^3/cst.mu1);
@@ -75,9 +75,10 @@ R2_gps = [SC_r_g_hat(2,1) ; SC_r_g_hat(2,2) ; SC_r_g_hat(2,3)];
 
 [R1_gps,V1_gps] = find_v_given_position_data(R1_gps,R2_gps,t(1),t(2));
 [a_gps,e_gps,Omega_gps,inc_gps,omega_orbit_gps,Delta_t0_gps] = orbital_elements(R1_gps,V1_gps);
-t0_gps = Delta_t0_gps - t(1);
+t0_gps = -Delta_t0_gps + t(1);
 
 orbs_gps = [a_gps,e_gps,Omega_gps,inc_gps,omega_orbit_gps,t0_gps]
+T_gps = 2*pi*sqrt(a_gps^3/cst.mu1)/3600 %hours
 
 %% Plot results
 plot_script_v1;

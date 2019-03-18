@@ -11,7 +11,7 @@ while (lv1<=num_sats)
    
    lv1 = lv1 +1;
 end
-sum
+sum;
 
 % Pre-allocate
 Weight_matrix = zeros(num_sats,num_sats);
@@ -23,4 +23,4 @@ while (lv2<=num_sats)
     
     lv2 = lv2 +1;
 end
-Weight_matrix
+Weight_matrix;
