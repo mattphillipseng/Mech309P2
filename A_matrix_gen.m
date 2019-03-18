@@ -4,8 +4,10 @@ function  [A_matrix] = A_matrix_gen(GPS_sat_positions, receiver_pos);
 sat_data_size = size(GPS_sat_positions);
 sat_num = sat_data_size(1,1); % should be 6 for the given test data
 
+% Pre-allocate
 A_matrix = ones(sat_num,4);
 
+%% Build matrix
 lv_row = 1;
 lv_col = 1;
 while (lv_row <= sat_num)

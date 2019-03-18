@@ -4,6 +4,7 @@ function  [Weight_matrix] = Weight_matrix_gen(S_devs);
 S_devs_size = size(S_devs);
 num_sats = S_devs_size(1,1); % should be 6 for the given test data
 
+%% Get sum of standard devs
 lv1 = 1;
 sum = 0;
 while (lv1<=num_sats)
@@ -16,6 +17,7 @@ sum;
 % Pre-allocate
 Weight_matrix = zeros(num_sats,num_sats);
 
+%% Build matrix
 lv2 = 1;
 while (lv2<=num_sats)
     weight = abs(sum - S_devs(lv2))/sum; %normalized

@@ -46,7 +46,7 @@ iters = 1;
 err = 100; % just to enter the while loop
 
 % Will stop when norm of error is within 0.1m, or at 100 iterations
-while (err>0.01) && (iters<=50)
+while (err>0.1) && (iters<=50)
     soln_pos = soln_matrix(1:3); % Only positions of the receiver, excludes the receiver bias. 
     
     A_matrix = A_matrix_gen(GPS_sat_positions, soln_pos);
@@ -55,11 +55,13 @@ while (err>0.01) && (iters<=50)
     delta = inv(A_matrix'*A_matrix)*A_matrix'*Weight_matrix*b_matrix;
     soln_matrix = soln_matrix + delta;
 
-    %error_matrix = b_matrix - (A_matrix*delta); %%%%%%% CHECK THIS WITH NOTES
+    % Needs to be double-checked
+    %error_matrix = b_matrix - (A_matrix*delta);
     %err = norm(error_matrix);
     
     err = norm(delta);
     
     iters = iters +1;
 end
+iters;
 soln_matrix;

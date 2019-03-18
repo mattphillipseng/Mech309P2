@@ -22,8 +22,6 @@ load('MECH309_MP2_data.mat');
 
 whos
 
-%return % comment this out
-
 %% Solve for velocity given two positions at two times
 [rg1,vg1] = find_v_given_position_data(r_g_at_t1,r_g_at_t2,t1,t2);
 
@@ -34,7 +32,7 @@ whos
 
 % To find t0, need to subtract the time the first radar meas was taken from
 % Delta_t0
-t0 = Delta_t0 - t1;
+t0 = Delta_t0 - t1; % We believe this should be multiplied by -1. Does not affect final results.
 
 orbs_theoretical = [a,e,Omega,inc,omega_orbit,t0]
 
