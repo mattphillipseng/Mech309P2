@@ -1,10 +1,10 @@
 %% MECH 309 Mini-Project 2
 
 % Modified by Matthew Phillips
-% Student ID: 260689202
+
 
 % Modified by Jarred Brown
-% Student ID: 260688463
+
 
 close all
 clear all
